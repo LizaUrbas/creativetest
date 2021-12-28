@@ -1,51 +1,64 @@
+import { React, useState } from 'react'
 import logo from './logo.svg';
 
 import './App.css';
+import { Header } from './Components/Header/Header';
 
-const Header = () => {
-  return(
-    <header className="App-header">
-    <img src={logo} className="App-logo" alt="logo" />
-    <h1>Processing</h1>
-  </header>
+const Card = ({person, club, teamGoals, cardClick}) =>{
+  const[goals, setGoals] = useState(0);
 
-  );
-}
+  const handleCardClick = () =>{
+    setGoals(goals+1);
+    cardClick();
+  }
 
-const Main = ({title,price}) =>{
-  
 
   return(
-    <main>
-      <h2>
-        {title}
-      </h2>
+    <div onClick={handleCardClick}>
       <h3>
-        {price}
+        {person.firstName}{person.lastName}
       </h3>
-     
-    </main>
-  );
-}
+      <span>
+        Играет в клубе {club}
+      </span>
+      <h3>
+        Кол-во забитых голов:{goals}
 
-const Footer = () =>{
-  return(
-    <footer>
-      <a>link something</a>
-    </footer>
+      </h3>
+
+    </div>
+
   )
 }
+
+
 function App() {
+  const [teamGoals,setTeamGoals] = useState(0);
+
+const handleCardClick = () =>{
+  setTeamGoals(teamGoals+1);
+}
+
   return (
     <div className="App">
-     <Header/>
-     <div>
-       <p>span</p>
-     </div>
-     <Main title="PC" price={4500}/>
-     <Main title="Laptop" price={5000}/>
-     <Main title="Phone" price={2000}/>
-     <Footer/>
+      <h1>Количество командных голов: {teamGoals} </h1>
+     <header className="App-header">
+        <Card 
+          cardClick = {handleCardClick}
+          person={{firstName:'Иван', lastName:' Иванов'}} 
+          club='Зенит'
+          goals={ teamGoals }/>
+          <Card
+          cardClick = {handleCardClick} 
+          person={{firstName:'Пётр', lastName:' Петров'}} 
+          club='Зенит'
+          goals={ teamGoals }/>
+          <Card 
+          cardClick = {handleCardClick}
+          person={{firstName:'Кирилл', lastName:' Селигей'}} 
+          club='Зенит'
+          goals={ teamGoals }/>
+     </header>
     </div>
   );
 }
